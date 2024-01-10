@@ -1,9 +1,13 @@
-# solution-with-scripting-and-commands# solution-with-scripting-and-commands
-Problem1 : Troubleshoot a server that can't connect to the internet:
-# Solution : step1>1st we have to ping to any public ip like google dns ip
+# solution-with-scripting-and-commands
+
+# Problem1 : Troubleshoot a server that can't connect to the internet:
+# Solution :
+step1>1st we have to ping to any public ip like google dns ip
+        
           $ ping 8.8.8.8
 if we get the proper reply thats mean internet is working properly but if we are not getting the proper reply thats mean internet is not working properly then we can go for some troubleshooting process.
-# step2>Check our network configuration using
+
+ step2>Check our network configuration using
           $ ip addr
                      or
                 $ ip link   
@@ -19,7 +23,7 @@ The output of the command will show the status of each network interface on the 
                   
 if the problem is still persist
                   
-# step3>Check the network configuration file 
+ step3>Check the network configuration file 
 To make changes to the network configuration, i will need to open the right file in a text editor.
 
          $ sudo vi /etc/sysconfig/network-scripts/ifcfg-eth0
@@ -28,6 +32,8 @@ The configuration file for eth0 should look like this-
                    DEVICE=eth0
                    BOOTPROTO=dhcp
                    ONBOOT=yes
+
+If the issue still persist then we have to check DNS 
 
 # Explanation the purpose of the /etc/hosts and how it is used:
 # solution-
@@ -44,7 +50,7 @@ The /etc/hosts file stores plain text content, but it requires a specific format
 
                      $ 184.233.11.3 production-db.mydomain.com
 
-#Problem2 : Install a new package on a Debian based system:
+# Problem2 : Install a new package on a Debian based system:
 # solution-
 we can install applications different ways. Terminal, the Ubuntu Software Center, and Synaptic. we can install packages via terminal.
 The best part about Ubuntu and any flavor of Linux is that it comes with its own repository. A repository is basically like a store filled with thousands of packages or software. However, all the software available in the repository is open source and for Linux.
@@ -75,7 +81,7 @@ Apt -get remove will not remove the configuration files of the program we instal
 
              $  apt purge mysql-client-8.0        
 
-# configure a service to start automatically at boot time:
+# Problem : configure a service to start automatically at boot time:
 1. List Services which are Started Automatically
 If you want to find which services are added into Systemd autostart, use the list-unit-files command with filtering by state:
 
@@ -98,7 +104,7 @@ When the service is not running now and you want to start it now, you can combin
 
             $ sudo systemctl enable --now nginx
 
-# Problem3 : Backup and Recovery      
+# Problem3 : Backup and Recovery | Setup automatic backup | how to set up automatic backup using command lines tools.     
 
 # Solution 
 
@@ -134,14 +140,19 @@ To schedule the script, edit the crontab:
 Append the following entry. Make sure to set the correct script name and path. The below schedule will run the script at 02 AM every day.
 
       0  2  *  *  *  bash backup.sh >> backup.log
-# Problem4 : System/Server 
+# Problem4 : System/Server | If the web server is not running , how do analyze and fix the issue :
 
-step1> check the logs . For instance, if you have an Apache server running on an Ubuntu server, by default the logs will be kept in /var/log/apache2.
+step1> check the logs . For instance, if you have an Apache server running on an Ubuntu server, by default the logs will be kept in
+
+            /var/log/apache2.
+
+
 step2> check Web Server Installed:
+          
           $ sudo apt-get update
           $ sudo apt-get install apache2
+or, 
 
-          or, 
 If you are running Ubuntu or Debian and want the Nginx web server, you can instead type:
 
           $ sudo apt-get update
@@ -149,11 +160,13 @@ If you are running Ubuntu or Debian and want the Nginx web server, you can inste
           
 step3> check Web Server Running:  
  ou can then grep the output of netstat for the name of the process you are looking for:         
+          
           $ sudo netstat -plunt | grep nginx
   
    For instance, you could start the nginx service by typing:
 
-          $ sudo systemctl start nginx      
+          $ sudo systemctl start nginx  
+          
 step4> check the Syntax of your Web Server Configuration File Correct
 
        
@@ -200,6 +213,61 @@ This can also be done to a directory. You can change the ownership of a director
        
 If all else Fails, Check the Logs Again
 
+# Problem | Monitoring and Logging | Tools or commands to analyze a log file for errors:
+# Solution :
+System logs deal with exactly that - the Ubuntu system - as opposed to extra applications added by the user. These logs may contain information about authorizations, system daemons and system messages.
+1.Authorization log
 
+      Location: /var/log/auth.log
+      
+Keeps track of authorization systems, such as password prompts, the sudo command and remote logins.      
+2.Daemon Log
 
+      Location: /var/log/daemon.log
+
+Daemons are programs that run in the background, usually without user interaction. For example, display server, SSH sessions, printing services, bluetooth, and more.
+
+3.Debug log
+
+     Location: /var/log/debug
+
+Provides debugging information from the Ubuntu system and applications.      
+
+4.Kernel log
+    
+    Location: /var/log/kern.log
+
+Logs from the Linux kernel.
+
+System log
          
+         Location: /var/log/syslog
+
+Contains more information about your system. If you can’t find anything in the other logs, it’s probably here.
+5.Application logs
+ 
+ Apache logs
+      
+       Location: /var/log/apache2/ (subdirectory)
+
+X11 server logs
+       
+       Location: /var/log/Xorg.0.log
+
+****Monitoring files
+
+To monitor a log file, you may pass the -f flag to tail. It will keep running, printing new additions to the file, until you stop it (Ctrl + C). For example: tail -f file.txt.
+
+****Searching files
+
+ to search for lines containing “test” in file.txt, you would run grep "test" file.txt.
+
+****Editing files
+
+The simplest way to edit files from the command line is to use nano. nano is a simple command line editor, which has all the most useful keybindings printed directly on screen.
+
+
+
+
+
+
